@@ -1,3 +1,4 @@
+
 package com.koreait.exam.batch_ex_24_04.app.base;
 
 import com.koreait.exam.batch_ex_24_04.app.cart.service.CartService;
@@ -21,9 +22,16 @@ import java.util.List;
 @Profile("dev")
 @Slf4j
 public class DevInitData {
+
+    private boolean initDataDone = false;
+
     @Bean
     public CommandLineRunner initData(MemberService memberService, ProductService productService, CartService cartService, OrderService orderService) {
         return args -> {
+
+            if(initDataDone) return;
+
+            initDataDone = true;
 
             class Helper {
                 public Order order(Member member, List<ProductOption> productOptions) {
