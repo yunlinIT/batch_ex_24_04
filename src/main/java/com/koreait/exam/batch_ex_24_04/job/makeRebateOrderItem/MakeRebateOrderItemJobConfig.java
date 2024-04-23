@@ -32,7 +32,7 @@ import java.util.Collections;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class makeRebateOrderItemJobConfig {
+public class MakeRebateOrderItemJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
