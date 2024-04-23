@@ -32,7 +32,7 @@ import java.util.Collections;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class MakeRebateOrderItemJobConfig {
+public class makeRebateOrderItemJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
@@ -69,9 +69,9 @@ public class MakeRebateOrderItemJobConfig {
         return new RepositoryItemReaderBuilder<OrderItem>()
                 .name("orderItemReader")
                 .repository(orderItemRepository)
-                .methodName("findAll")
+                .methodName("findAllByIdLessThan")
                 .pageSize(100)
-                .arguments(Arrays.asList())
+                .arguments(Arrays.asList(6L))
                 .sorts(Collections.singletonMap("id", Sort.Direction.ASC))
                 .build();
     }
