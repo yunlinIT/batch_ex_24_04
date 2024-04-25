@@ -4,10 +4,6 @@ import com.koreait.exam.batch_ex_24_04.app.order.entity.OrderItem;
 import com.koreait.exam.batch_ex_24_04.app.order.entity.RebateOrderItem;
 import com.koreait.exam.batch_ex_24_04.app.order.repository.OrderItemRepository;
 import com.koreait.exam.batch_ex_24_04.app.order.repository.RebateOrderItemRepository;
-import com.koreait.exam.batch_ex_24_04.app.product.entity.Product;
-import com.koreait.exam.batch_ex_24_04.app.product.entity.ProductBackup;
-import com.koreait.exam.batch_ex_24_04.app.product.repository.ProductBackupRepository;
-import com.koreait.exam.batch_ex_24_04.app.product.repository.ProductRepository;
 import com.koreait.exam.batch_ex_24_04.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +43,7 @@ public class makeRebateOrderItemJobConfig {
         initData.run();
 
         return jobBuilderFactory.get("makeRebateOrderItemJob")
+//                .start(makeRebateOrderItemStep0) // 필요시에 결제데이터와 정산데이터의 일치 작업 해주는 Step제작
                 .start(makeRebateOrderItemStep1)
                 .build();
     }
