@@ -8,6 +8,7 @@ import com.koreait.exam.batch_ex_24_04.app.product.entity.Product;
 import com.koreait.exam.batch_ex_24_04.app.product.entity.ProductBackup;
 import com.koreait.exam.batch_ex_24_04.app.product.repository.ProductBackupRepository;
 import com.koreait.exam.batch_ex_24_04.app.product.repository.ProductRepository;
+import com.koreait.exam.batch_ex_24_04.util.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -66,13 +68,19 @@ public class makeRebateOrderItemJobConfig {
 
     @StepScope
     @Bean
-    public RepositoryItemReader<OrderItem> orderItemReader() {
+    public RepositoryItemReader<OrderItem> orderItemReader(
+            @Value("#{jobParameters['month']}") String yearMonth
+    ) {
+        int monthEndDay = Util.date.getEndDayOf(yearMonth);
+        LocalDateTime fromDate = Util.date.parse(yearMonth+"-01 00:00:00.000000");
+        LocalDateTime toDate = Util.date.parse(yearMonth + "-%02d 23:59:59.999999".formatted(monthEndDay));
+
         return new RepositoryItemReaderBuilder<OrderItem>()
                 .name("orderItemReader")
                 .repository(orderItemRepository)
-                .methodName("findAllByIsPaid")
+                .methodName("findAllByPayDateBetween")
                 .pageSize(100)
-                .arguments(Arrays.asList(true))
+                .arguments(Arrays.asList(fromDate,toDate))
                 .sorts(Collections.singletonMap("id", Sort.Direction.ASC))
                 .build();
     }
