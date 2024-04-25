@@ -1,4 +1,3 @@
-
 package com.koreait.exam.batch_ex_24_04.app.base;
 
 import com.koreait.exam.batch_ex_24_04.app.cart.service.CartService;
@@ -118,13 +117,30 @@ public class DevInitData {
 
             orderService.refund(order2);
 
-            Order order3 = helper.order(member2,Arrays.asList(product1Option__RED_95,product1Option__RED_100,product2Option__Black_95,product2Option__White_95));
+            Order order3 = helper.order(
+                    member2,Arrays.asList(
+                            product1Option__RED_95,
+                            product1Option__RED_100,
+                            product2Option__Black_95,
+                            product2Option__White_95
+                    ));
 
             orderService.payByRestCashOnly(order3);
 
-            Order order4 = helper.order(member1,Arrays.asList(product1Option__RED_95,product2Option__White_95));
+            Order order4 = helper.order(
+                    member1,Arrays.asList(
+                            product1Option__RED_95,
+                            product2Option__White_95
+                    ));
 
             orderService.payByRestCashOnly(order4);
+
+            Order order5 = helper.order(
+                    member1,Arrays.asList(
+                            product1Option__RED_95,
+                            product2Option__White_95
+                    ));
+
         };
     }
 }
